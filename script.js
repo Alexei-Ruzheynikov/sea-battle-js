@@ -1,3 +1,32 @@
+// Пример 1 зачем нужен сеттер
+// Set - принимает, Get - отдает
+// const sum = {
+//   all: {
+//     a: 0,
+//     b: 0
+//   },
+//   calculate() {
+//     this.all.result = this.all.a + this.all.b;
+//   },
+//   set a(param) {
+//     this.all.a = param;
+//     this.calculate();
+//   },
+//   set b(param) {
+//     this.all.b = param;
+//     this.calculate();
+//   },
+//   get a() {
+//     return "Значение a: " + this.all.a;
+//   },
+//   get result() {
+//     return this.all.result;
+//   }
+// };
+// sum.a = 3;
+// sum.b = 13;
+// console.log(sum.a);
+
 const record = document.querySelector("#record");
 const shot = document.querySelector("#shot");
 const hit = document.querySelector("#hit");
@@ -35,6 +64,7 @@ const show = {
 
 const fire = (event) => {
   const target = event.target;
+  if (target.classList.length !== 0 || target.tagName !== "TD") return;
   show.miss(target);
   play.updateData = "shot";
 };
@@ -44,32 +74,3 @@ const init = () => {
 };
 
 init();
-
-// Пример 1 зачем нужен сеттер
-// Set - принимает, Get - отдает
-const sum = {
-  all: {
-    a: 0,
-    b: 0
-  },
-  calculate() {
-    this.all.result = this.all.a + this.all.b;
-  },
-  set a(param) {
-    this.all.a = param;
-    this.calculate();
-  },
-  set b(param) {
-    this.all.b = param;
-    this.calculate();
-  },
-  get a() {
-    return "Значение a: " + this.all.a;
-  },
-  get result() {
-    return this.all.result;
-  }
-};
-sum.a = 3;
-sum.b = 13;
-console.log(sum.a);
