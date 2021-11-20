@@ -33,6 +33,7 @@ const hit = document.querySelector("#hit");
 const dead = document.querySelector("#dead");
 const enemy = document.querySelector("#enemy");
 const again = document.querySelector("#again");
+const header = document.querySelector(".header");
 
 const game = {
   ships: [
@@ -40,7 +41,8 @@ const game = {
     { location: ["11", "12", "13"], hit: ["", "", ""] },
     { location: ["69", "79"], hit: ["", ""] },
     { location: ["32"], hit: [""] }
-  ]
+  ],
+  shipCount: 4
 };
 
 const play = {
@@ -93,6 +95,11 @@ const fire = (event) => {
         play.updateData = "dead";
         for (const id of ship.location) {
           show.dead(document.getElementById(id));
+        }
+        game.shipCount -= 1;
+        if (game.shipCount < 1) {
+          header.textContent = "Игра окончена";
+          header.style.color = "red";
         }
       }
     }
