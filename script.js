@@ -46,7 +46,7 @@ const game = {
 };
 
 const play = {
-  record: 0,
+  record: localStorage.getItem("seaBattleRecord") || 0,
   shot: 0,
   hit: 0,
   dead: 0,
@@ -100,6 +100,12 @@ const fire = (event) => {
         if (game.shipCount < 1) {
           header.textContent = "Игра окончена";
           header.style.color = "red";
+
+          if (play.shot < play.record || play.record === 0) {
+            localStorage.setItem("seaBattleRecord", play.shot);
+            play.record = play.shot;
+            play.render();
+          }
         }
       }
     }
@@ -108,6 +114,11 @@ const fire = (event) => {
 
 const init = () => {
   enemy.addEventListener("click", fire);
+  play.render();
+
+  again.addEventListener("click", () => {
+    location.reload();
+  });
 };
 
 init();
