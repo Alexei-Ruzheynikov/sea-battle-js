@@ -27,6 +27,18 @@
 // sum.b = 13;
 // console.log(sum.a);
 
+// const obj = {
+//   firstname: "Arya",
+//   surname: "Stark",
+//   age: 17,
+//   kill(victum) {
+//     console.log(victum + " dead!");
+//   }
+// };
+// //Деструктивное присваивание(присвоение)
+// const { firstname, kill } = obj;
+// console.log(firstname);
+
 const record = document.querySelector("#record");
 const shot = document.querySelector("#shot");
 const hit = document.querySelector("#hit");
@@ -79,7 +91,12 @@ const show = {
 
 const fire = (event) => {
   const target = event.target;
-  if (target.classList.length !== 0 || target.tagName !== "TD") return;
+  if (
+    target.classList.length !== 0 ||
+    target.tagName !== "TD" ||
+    !game.shipCount
+  )
+    return;
   show.miss(target);
   play.updateData = "shot";
 
@@ -97,7 +114,7 @@ const fire = (event) => {
           show.dead(document.getElementById(id));
         }
         game.shipCount -= 1;
-        if (game.shipCount < 1) {
+        if (!game.shipCount) {
           header.textContent = "Игра окончена";
           header.style.color = "red";
 
