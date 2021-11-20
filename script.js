@@ -34,6 +34,15 @@ const dead = document.querySelector("#dead");
 const enemy = document.querySelector("#enemy");
 const again = document.querySelector("#again");
 
+const game = {
+  ships: [
+    { location: ["26", "36", "46", "56"], hit: ["", "", "", ""] },
+    { location: ["11", "12", "13"], hit: ["", "", ""] },
+    { location: ["69", "79"], hit: ["", ""] },
+    { location: ["32"], hit: [""] }
+  ]
+};
+
 const play = {
   record: 0,
   shot: 0,
@@ -52,11 +61,15 @@ const play = {
 };
 
 const show = {
-  hit() {},
+  hit(elem) {
+    this.changeClass(elem, "hit");
+  },
   miss(elem) {
     this.changeClass(elem, "miss");
   },
-  dead() {},
+  dead(elem) {
+    this.changeClass(elem, "dead");
+  },
   changeClass(elem, value) {
     elem.className = value;
   }
@@ -67,6 +80,23 @@ const fire = (event) => {
   if (target.classList.length !== 0 || target.tagName !== "TD") return;
   show.miss(target);
   play.updateData = "shot";
+
+  for (let i = 0; i < game.ships.length; i++) {
+    const ship = game.ships[i];
+    const index = ship.location.indexOf(target.id);
+    if (index >= 0) {
+      show.hit(target);
+      play.updateData = "hit";
+      ship.hit[index] = "x";
+      const life = ship.hit.indexOf("");
+      if (life < 0) {
+        play.updateData = "dead";
+        for (const id of ship.location) {
+          show.dead(document.getElementById(id));
+        }
+      }
+    }
+  }
 };
 
 const init = () => {
